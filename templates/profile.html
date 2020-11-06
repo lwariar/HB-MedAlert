@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}MedAlert - Edit profile{% endblock %}
+
+{% block body %}
+
+    <div>
+        <p>Update your profile</p>
+        <form action="/update-profile" method="POST">
+        <table>
+            <tr><td>First name </td><td><input type="text" name="fname" value="{{ user.fname }}" size="20" required></td></tr>
+            <tr><td>Last name </td><td><input type="text" name="lname" value="{{ user.lname }}" size="20"required></td></tr>
+            <tr><td>Email </td><td><input type="text" name="email" value="{{ user.email }}" size="50" required></td></tr>
+            <tr><td>Password </td><td><input type="password" name="password" value="{{ user.password }}" size="20" required></td></tr>
+            <tr><td>Telephone number </td><td><input type="text" name="tel_num" value="{{ user.tel_num }}" size="12"></td></tr>
+            <tr><td>Caregiver email </td><td><input type="text" name="caregiver_email" value="{{ user.caregiver_email }}" size="50"></td></tr>
+        </table>
+        <br><br>
+        <p>Add/Update</p>
+            <p><input type="radio" id="device" name="qtype" value="device">
+            <label for="device">Device</label>
+            <input type="radio" id="drug" name="qtype" value="drug">
+            <label for="drug">Drug</label></p>
+        <table>
+            <tr><td>Name </td><td><input type="text" name="name" size="20"></td>
+            <td>Manufacturer Name </td><td><input type="text" name="mname" size="20"></td></tr>
+            <tr><td>Model # </td><td><input type="text" name="model_num" id="model_num" size="20" disabled></td>
+            <td>Serial # </td><td><input type="text" name="serial_num" id="serial_num" size="20" disabled></td></tr>
+        </table>
+        <br><br><br>
+        <p><button name="submit" type="submit" value="Update">Update</button></p>
+        </form>
+    </div>
+    <script src="/static/js/edit_profile.js"></script>
+{% endblock %}
