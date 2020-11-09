@@ -4,12 +4,18 @@
 {% block body %}
 
     <div class="myClass">
+    <br>Hi {{ user.fname }} !
     <br>Search for regulatory warnings issued for pharmaceuticals and/or medical devices.
-    <br><input type="radio" id="device" name="qtype" value="device">
-        <label for="device">Device</label>
-        <input type="radio" id="drug" name="qtype" value="drug">
-        <label for="drug">Drug</label>
-        <input type="text" name="search_term" id="search_term" size="50" required>
+    <label for="ddlist">Choose from the list:</label>
+
+    <select name="ddlist" id="ddlist">
+        {% for item in device %}
+        <option value="{{item.id}}">Device - {{ item.device_name }}, {{ item.manufacturer }}</option>
+        {% endfor %}
+        {% for item in drug %}
+        <option value="{{item.id}}">Drug - {{ item.drug_name }}, {{ item.manufacturer }}</option>
+        {% endfor %}
+    </select>
         <button name="submit" id="search" type="submit" value="Search">Search</button>
     </div>
     <div id="results" class="myClass">

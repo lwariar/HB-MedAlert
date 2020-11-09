@@ -17,9 +17,9 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def index():
-    """View homepage"""
+    """View login"""
     
-    return render_template("homepage.html")
+    return render_template("login.html")
 
 @app.route('/about')
 def about():
@@ -27,11 +27,20 @@ def about():
     
     return render_template("about.html")
 
-@app.route('/homepage')
-def homepage():
-    """View homepage"""
+@app.route('/search')
+def search():
+    """View search"""
     
-    return render_template("homepage.html")
+    # get the list of drugs and devices for this user
+    user_id = session.get("user_id")
+    if user_id:
+        user = crud.get_user_by_id(user_id)
+        device = crud.get_devices_by_user_id(user.user_id)
+        drug = crud.get_drugs_by_user_id(user.user_id)
+        return render_template("search.html", user=user, device=device, drug=drug)
+    else:
+        flash("Please sign in")
+        return render_template("login.html")
 
 @app.route('/profile')
 def profile():
@@ -39,12 +48,10 @@ def profile():
     user_id = session.get("user_id")
 
     if user_id:
-        user = crud.get_user_by_id(user_id);
+        user = crud.get_user_by_id(user_id)
         device = crud.get_devices_by_user_id(user.user_id)
         drug = crud.get_drugs_by_user_id(user.user_id)
-        print(device)
-        print(drug)
-        return render_template("profile.html", user=user)
+        return render_template("profile.html", user=user, device=device, drug=drug)
     else:
         flash("Please sign in")
         return render_template("login.html")
@@ -88,15 +95,18 @@ def register_user():
         mname = request.form.get('mname')
 
         if qtype == 'device':
-            model_num = request.form.get('model_num')
-            serial_num = request.form.get('serial_num')
-            device = crud.add_device(name, model_num, serial_num, mname, user.user_id)
-        else:
+            # model_num = request.form.get('model_num') // we're not using this now
+            # serial_num = request.form.get('serial_num')
+            device = crud.add_device(name, "", "", mname, user.user_id)
+        elif qtype == "drug':":
             drug = crud.add_drug(name, mname, user.user_id)
         #add user id to the session
         session["user_id"] = user.user_id
         flash("Your account was created successfully")
-        return render_template("homepage.html")
+    
+        device = crud.get_devices_by_user_id(user.user_id)
+        drug = crud.get_drugs_by_user_id(user.user_id)
+        return render_template("search.html", user=user, device=device, drug=drug)
 
 @app.route('/login', methods=['POST'])
 def user_login():
@@ -111,7 +121,9 @@ def user_login():
         #add user id to the session
         if "user_id" not in session:
             session["user_id"] = user.user_id
-        return render_template("homepage.html")
+        device = crud.get_devices_by_user_id(user.user_id)
+        drug = crud.get_drugs_by_user_id(user.user_id)
+        return render_template("search.html", user=user, device=device, drug=drug)
     else:
         flash("Login info incorrect, please try again")
         return redirect('/signin')
@@ -130,12 +142,22 @@ def update_profile():
     user_id = session.get("user_id")
     user = crud.update_user(user_id, fname, lname, email, password, tel_num, caregiver_email)
     if user:
+        #add drug/device for the user
+        qtype = request.form.get('qtype')
+        name = request.form.get('name')
+        mname = request.form.get('mname')
+
+        if qtype == 'device':
+            device = crud.add_device(name, "", "", mname, user.user_id)
+        elif qtype == "drug':":
+            drug = crud.add_drug(name, mname, user.user_id)
         flash("Update successful")
     else:
         flash("Oops! Something went wrong!")
-
-    return render_template("homepage.html")
-
+    
+    device = crud.get_devices_by_user_id(user.user_id)
+    drug = crud.get_drugs_by_user_id(user.user_id)
+    return render_template("search.html", user=user, device=device, drug=drug)
 
 # @app.route('/query', methods=['POST'])
 # def query():
@@ -162,7 +184,6 @@ def update_profile():
 # 'https://api.fda.gov/device/event.json?search=device.generic_name:glucometer&limit=1'
 
 # URL = 'https://api.fda.gov/drug/enforcement.json?search=product_description:RANITIDINE&limit=10'
-
 
 if __name__ == '__main__':
     connect_to_db(app)
