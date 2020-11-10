@@ -6,14 +6,14 @@
     <div class="myClass">
     <br>Hi {{ user.fname }} !
     <br>Search for regulatory warnings issued for pharmaceuticals and/or medical devices.
-    <label for="ddlist">Choose from the list:</label>
+    Choose from the list:
 
     <select name="ddlist" id="ddlist">
         {% for item in device %}
-        <option value="{{item.id}}">Device - {{ item.device_name }}, {{ item.manufacturer }}</option>
+        <option value="{{item.id}}">Device~{{ item.device_name }}~{{ item.manufacturer }}</option>
         {% endfor %}
         {% for item in drug %}
-        <option value="{{item.id}}">Drug - {{ item.drug_name }}, {{ item.manufacturer }}</option>
+        <option value="{{item.id}}">Drug~{{ item.drug_name }}~{{ item.manufacturer }}</option>
         {% endfor %}
     </select>
         <button name="submit" id="search" type="submit" value="Search">Search</button>
