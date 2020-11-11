@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}MedAlert - Create a new account{% endblock %}
+
+{% block body %}
+    <form action="/update_dd" method="POST">
+    <br>
+    A list of current medications and/or devices:
+    <ul>
+        {% for item in device %}
+        <li>{{ item.device_name }}, {{ item.manufacturer }}, {{ item.model_num }}, {{ item.serial_num }}</li>
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for item in drug %}
+        <li>{{ item.drug_name }}, {{ item.manufacturer }}</li>
+        {% endfor %}
+    </ul>
+    <br><br>
+    <p>Add:</p>
+        <p><input type="radio" id="device" name="qtype" value="device">
+        <label for="device">Device</label>
+        <input type="radio" id="drug" name="qtype" value="drug">
+        <label for="drug">Drug</label></p>
+    <table>
+        <tr><td>Name </td><td><input type="text" name="name" size="20"></td>
+        <td>Manufacturer Name </td><td><input type="text" name="mname" size="20"></td></tr>
+    </table>
+    <br><br><br>
+    <p><button name="submit" type="submit" value="Update">Update</button></p>
+    </form>
+{% endblock %}

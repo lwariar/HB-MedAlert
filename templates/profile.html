@@ -14,31 +14,7 @@
             <tr><td>Telephone number </td><td><input type="text" name="tel_num" value="{{ user.tel_num }}" size="12"></td></tr>
             <tr><td>Caregiver email </td><td><input type="text" name="caregiver_email" value="{{ user.caregiver_email }}" size="50"></td></tr>
         </table>
-        <br>
-        A list of current medications and/or devices:
-        <ul>
-            {% for item in device %}
-            <li>{{ item.device_name }}, {{ item.manufacturer }}, {{ item.model_num }}, {{ item.serial_num }}</li>
-            {% endfor %}
-        </ul>
-        <ul>
-            {% for item in drug %}
-            <li>{{ item.drug_name }}, {{ item.manufacturer }}</li>
-            {% endfor %}
-        </ul>
-        <br><br>
-        <p>Add:</p>
-            <p><input type="radio" id="device" name="qtype" value="device">
-            <label for="device">Device</label>
-            <input type="radio" id="drug" name="qtype" value="drug">
-            <label for="drug">Drug</label></p>
-        <table>
-            <tr><td>Name </td><td><input type="text" name="name" size="20"></td>
-            <td>Manufacturer Name </td><td><input type="text" name="mname" size="20"></td></tr>
-            <!-- <tr><td>Model # </td><td><input type="text" name="model_num" id="model_num" size="20" disabled></td>
-            <td>Serial # </td><td><input type="text" name="serial_num" id="serial_num" size="20" disabled></td></tr> -->
-        </table>
-        <br><br><br>
+       
         <p><button name="submit" type="submit" value="Update">Update</button></p>
         </form>
     </div>
