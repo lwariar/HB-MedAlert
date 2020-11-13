@@ -1,30 +1,11 @@
 'use strict';
 
-//global results var
-var queryResults;
-
-function apiQueryResults(evt) 
+function api_call(URL)
 {
-    evt.preventDefault();
-
-    // get the users selection
-    var qstr = $('#ddlist :selected').text().split("~");
-
-    $( "#results" ).empty();
-    // build the query
-    if (qstr == "All")
-    {
-        alert('All');
-    }
-    else
-        URL = 'https://api.fda.gov/' + qstr[0] + '/enforcement.json?search=product_description:'+ qstr[1] + '&limit=1';
-    
-    
     $.get(URL, function( data ) {
         //if results are found
         if (data)
         {
-            queryResults = data;
             $('#results').append(`<br>Product Description: ${data.results[0]['product_description']}`);
             $('#results').append(`<br>Reason for recall:<i><b> ${data.results[0]['reason_for_recall']} </b></i>`);
             $('#results').append(`<br>Classification: ${data.results[0]['classification']}`);
@@ -43,7 +24,7 @@ function apiQueryResults(evt)
             $('#results').append(`<br>Termination Date: ${t_date}`);
             $('#results').append(`<br>Voluntary Mandated: ${data.results[0]['voluntary_mandated']}`);
             $('#results').append(`<br>Status: ${data.results[0]['status']}`);
-
+            $('#results').append(`<br>------------------------------------------------------------------`);
             //enable the email button
             $('#emailthis').prop('disabled', false);
         }
@@ -54,6 +35,34 @@ function apiQueryResults(evt)
             $('#emailthis').prop('disabled', true);
         }
     });
+}
+function apiQueryResults(evt) 
+{
+    evt.preventDefault();
+
+    // get the users selection
+    var qstr = $('#ddlist :selected').text().split("~");
+
+    $( "#results" ).empty();
+    // build the query
+    if (qstr == "All")
+    {
+        var arr = new Array();
+        $('#ddlist option').each(function(){
+        arr.push($(this).text());
+        });
+        for (let i=1; i<arr.length; i++)
+        {
+            let tempstr = arr[i].split("~");
+            URL = 'https://api.fda.gov/' + tempstr[0] + '/enforcement.json?search=product_description:'+ tempstr[1] + '&limit=1';
+            api_call(URL);
+        }
+    }
+    else
+    {
+        URL = 'https://api.fda.gov/' + qstr[0] + '/enforcement.json?search=product_description:'+ qstr[1] + '&limit=1';
+        api_call(URL);
+    }
 }   
 $('#search').on('click', apiQueryResults);
 
@@ -61,6 +70,7 @@ function sendEmail(evt)
 {
     evt.preventDefault();
     //get the text from #results on the page
+    //note: the body is limited to 2000 chars
     var email_body = $('#results').text();
     let user_email = $('#useremail').text();
     let subject = "From MedAlert!";

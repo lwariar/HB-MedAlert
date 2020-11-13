@@ -5,16 +5,19 @@
     <form action="/update_dd" method="POST">
     <br>
     A list of current medications and/or devices:
-    <ul>
+    <table class="mytable">
+        <tr><th>Update</th><th>Delete</th><th>Devices/Drugs</th></tr>
         {% for item in device %}
-        <li>{{ item.device_name }}, {{ item.manufacturer }}, {{ item.model_num }}, {{ item.serial_num }}</li>
+        <tr><td><input type="radio" id="update" name="dev{{ item.id }}" value="update"></td>
+            <td><input type="radio" id="delete" name="dev{{ item.id }}" value="delete"></td>
+            <td>{{ item.device_name }}, {{ item.manufacturer }}</td></tr>
         {% endfor %}
-    </ul>
-    <ul>
         {% for item in drug %}
-        <li>{{ item.drug_name }}, {{ item.manufacturer }}</li>
+        <tr><td><input type="radio" id="update" name="dru{{ item.id }}" value="update"></td>
+            <td><input type="radio" id="delete" name="dru{{ item.id }}" value="delete"></td>
+            <td>{{ item.drug_name }}, {{ item.manufacturer }}</td></tr>
         {% endfor %}
-    </ul>
+    </table>
     <br><br>
     <p>Add:</p>
         <p><input type="radio" id="device" name="qtype" value="device">

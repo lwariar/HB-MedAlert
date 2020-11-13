@@ -1,6 +1,7 @@
 body {
     text-align: center;
     background-color: rgb(233, 213, 205);
+    min-height: 100vh;
 }
 
 footer {
@@ -32,3 +33,18 @@ button {
     color: white;
     text-align: center;
   }
+
+.mytable {
+    border: solid;
+    border-width: 1px;
+    border-color: lightsalmon;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    border: solid;
+    border-width: 1px;
+    border-color: lightsalmon;
+    padding: 10px;
+}

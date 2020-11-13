@@ -95,7 +95,16 @@ def add_update():
         flash("Please sign in")
         return render_template("login.html")
 
-        """
+@app.route('/update_dd', methods=['POST'])
+def update_dd():
+    """ update the device nd drug tables"""
+
+    user_id = session.get("user_id")
+
+
+
+
+    """
         #add drug/device for the user
         qtype = request.form.get('qtype')
         name = request.form.get('name')
@@ -119,7 +128,7 @@ def add_update():
             device = crud.add_device(name, "", "", mname, user.user_id)
         elif qtype == "drug':":
             drug = crud.add_drug(name, mname, user.user_id)
-        """
+    """
 
 @app.route('/search')
 def search():

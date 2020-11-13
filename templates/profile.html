@@ -2,21 +2,21 @@
 {% block title %}MedAlert - Edit profile{% endblock %}
 
 {% block body %}
-
-    <div>
+    <br><br><br>
         <p>Update your profile</p>
         <form action="/update-profile" method="POST">
+        <div class="myclass">
         <table>
             <tr><td>First name </td><td><input type="text" name="fname" value="{{ user.fname }}" size="20" required></td></tr>
             <tr><td>Last name </td><td><input type="text" name="lname" value="{{ user.lname }}" size="20"required></td></tr>
             <tr><td>Email </td><td><input type="text" name="email" value="{{ user.email }}" size="50" required></td></tr>
             <tr><td>Password </td><td><input type="password" name="password" value="{{ user.password }}" size="20" required></td></tr>
-            <tr><td>Telephone number </td><td><input type="text" name="tel_num" value="{{ user.tel_num }}" size="12"></td></tr>
+            <tr><td>Telephone number </td><td><input type="text" name="tel_num" value="{{ user.tel_num }}" placeholder="999-999-9999" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" size="12"></td></tr>
             <tr><td>Caregiver email </td><td><input type="text" name="caregiver_email" value="{{ user.caregiver_email }}" size="50"></td></tr>
         </table>
-       
+        </div>
+        <br><br><br>
         <p><button name="submit" type="submit" value="Update">Update</button></p>
         </form>
-    </div>
 
 {% endblock %}
