@@ -62,6 +62,25 @@ def add_device(name, model_num, serial_num, mname, user_id):
 
     return device
 
+def update_device(id, device_name, model_num, serial_num, mname, user_id):
+    """update device information"""
+    
+    device = Device.query.filter(Device.id == id).first()
+    device.device_name = device_name
+    device.model_num = model_num
+    device.serial_num = serial_num
+    device.manufacturer = mname
+    device.user_id = user_id
+
+    db.session.commit()
+
+    return device
+
+def delete_device(id):
+    """delete device for the user"""
+    Device.query.filter(Device.id == id).delete()
+    db.session.commit()
+
 def get_devices_by_user_id(user_id):
     """Return all devices by user id"""
 
@@ -78,6 +97,23 @@ def add_drug(name, mname, user_id):
     db.session.commit()
 
     return drug
+
+def update_drug(id, drug_name, mname, user_id):
+    """update drug information"""
+    
+    drug = Drug.query.filter(Drug.id == id).first()
+    drug.drug_name = drug_name
+    drug.manufacturer = mname
+    drug.user_id = user_id
+
+    db.session.commit()
+
+    return drug
+
+def delete_drug(id):
+    """delete drug for the user"""
+    Drug.query.filter(Drug.id == id).delete()
+    db.session.commit()
 
 def get_drugs_by_user_id(user_id):
     """Return all drugs by user id"""

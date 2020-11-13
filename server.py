@@ -100,35 +100,45 @@ def update_dd():
     """ update the device nd drug tables"""
 
     user_id = session.get("user_id")
+    #update or delete drugs/devices
+    # get the selected options from the form
+    f = request.form
+    for key in f.keys():
+        for value in f.getlist(key):
+            if key[0:3] == "dev":
+                if value == "update":
+                    devname = request.form.get('devname')
+                    devmname = request.form.get('devmname')
+                    device = crud.update_device(key[3:], devname, "", "", devmname, user_id)
+                elif value == "delete":
+                    crud.delete_device(key[3:])
 
+            elif key[0:3] == "dru":
+                if value == "update":
+                    druname = request.form.get('druname')
+                    drumname = request.form.get('drumname')
+                    drug = crud.update_drug(key[3:], druname, "", "", drumname, user_id)
+                elif value == "delete":
+                    crud.delete_drug(key[3:])
+            print(key,":", value)
+    # get user info by user_id
+    user = crud.get_user_by_id(user_id)
+    #add drug/device for the user
+    qtype = request.form.get('qtype')
+    name = request.form.get('name')
+    mname = request.form.get('mname')
 
+    if qtype == "device":
+        device = crud.add_device(name, "", "", mname, user.user_id)
+    elif qtype == "drug":
+        print(qtype, name, mname)
+        drug = crud.add_drug(name, mname, user.user_id)
+    
+    #get a list of devices and drugs for the user
+    device = crud.get_devices_by_user_id(user.user_id)
+    drug = crud.get_drugs_by_user_id(user.user_id)
 
-
-    """
-        #add drug/device for the user
-        qtype = request.form.get('qtype')
-        name = request.form.get('name')
-        mname = request.form.get('mname')
-
-        if qtype == 'device':
-            # model_num = request.form.get('model_num') // we're not using this now
-            # serial_num = request.form.get('serial_num') // we're not using this now
-            device = crud.add_device(name, "", "", mname, user.user_id)
-        elif qtype == "drug':":
-            drug = crud.add_drug(name, mname, user.user_id)
-        device = crud.get_devices_by_user_id(user.user_id)
-        drug = crud.get_drugs_by_user_id(user.user_id)
-
-        #add drug/device for the user
-        qtype = request.form.get('qtype')
-        name = request.form.get('name')
-        mname = request.form.get('mname')
-
-        if qtype == 'device':
-            device = crud.add_device(name, "", "", mname, user.user_id)
-        elif qtype == "drug':":
-            drug = crud.add_drug(name, mname, user.user_id)
-    """
+    return render_template("search.html", user=user, device=device, drug=drug)
 
 @app.route('/search')
 def search():

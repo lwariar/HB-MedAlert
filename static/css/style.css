@@ -35,16 +35,9 @@ button {
   }
 
 .mytable {
-    border: solid;
-    border-width: 1px;
-    border-color: lightsalmon;
-    border-collapse: collapse;
     width: 100%;
 }
 
 th {
-    border: solid;
-    border-width: 1px;
-    border-color: lightsalmon;
     padding: 10px;
 }

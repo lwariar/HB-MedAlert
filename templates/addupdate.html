@@ -3,31 +3,33 @@
 
 {% block body %}
     <form action="/update_dd" method="POST">
-    <br>
+    <br><br>
+    <div class="myclass">
     A list of current medications and/or devices:
     <table class="mytable">
-        <tr><th>Update</th><th>Delete</th><th>Devices/Drugs</th></tr>
+        <tr><th>Update</th><th>Delete</th><th>Device/Drug Name and Manufacturer</th></tr>
         {% for item in device %}
         <tr><td><input type="radio" id="update" name="dev{{ item.id }}" value="update"></td>
             <td><input type="radio" id="delete" name="dev{{ item.id }}" value="delete"></td>
-            <td>{{ item.device_name }}, {{ item.manufacturer }}</td></tr>
+            <td><input type="text" name="devname" value="{{ item.device_name }}" size="20"> <input type="text" name="devmname" value="{{ item.manufacturer }}" size="20"></td></tr>
         {% endfor %}
         {% for item in drug %}
         <tr><td><input type="radio" id="update" name="dru{{ item.id }}" value="update"></td>
             <td><input type="radio" id="delete" name="dru{{ item.id }}" value="delete"></td>
-            <td>{{ item.drug_name }}, {{ item.manufacturer }}</td></tr>
+            <td><input type="text" name="druname" value="{{ item.drug_name }}" size="20"> <input type="text" name="drumname" value="{{ item.manufacturer }}" size="20"></td></tr>
         {% endfor %}
     </table>
+    </div>
     <br><br>
-    <p>Add:</p>
-        <p><input type="radio" id="device" name="qtype" value="device">
-        <label for="device">Device</label>
-        <input type="radio" id="drug" name="qtype" value="drug">
-        <label for="drug">Drug</label></p>
-    <table>
-        <tr><td>Name </td><td><input type="text" name="name" size="20"></td>
-        <td>Manufacturer Name </td><td><input type="text" name="mname" size="20"></td></tr>
+    <div class="myclass">
+    Add:
+    <table class="mytable">
+        <tr><td><input type="radio" id="device" name="qtype" value="device"> Device</td>
+        <td><input type="radio" id="drug" name="qtype" value="drug"> Drug</td>
+        <td>Name <input type="text" name="name" size="20"></td>
+        <td>Manufacturer Name <input type="text" name="mname" size="20"></td></tr>
     </table>
+    </div>
     <br><br><br>
     <p><button name="submit" type="submit" value="Update">Update</button></p>
     </form>
