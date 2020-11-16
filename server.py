@@ -62,9 +62,14 @@ def register_user():
     lname = request.form.get('lname')
     email = request.form.get('email')
     password = request.form.get('password')
+    confirm_password = request.form.get('confirm_password')
     tel_num = request.form.get('tel_num')
     caregiver_email = request.form.get('caregiver_email')
     
+    if (password != confirm_password):
+        flash("Passowrds do not match, please try again.")
+        return redirect('/')
+        
     user = crud.get_user_by_email(email)
     
     """Check to see if user is already in database"""
