@@ -4,6 +4,7 @@ function api_call(URL, proddesc)
 {
     $.get(URL, function( data ) {
 
+        $('#results').append(`<br><b><i> ${proddesc} </i></b>`);
             $('#results').append(`<br>Product Description: ${data.results[0]['product_description']}`);
             $('#results').append(`<br>Reason for recall:<i><b> ${data.results[0]['reason_for_recall']} </b></i>`);
             $('#results').append(`<br>Classification: ${data.results[0]['classification']}`);
@@ -36,10 +37,17 @@ function apiQueryResults(evt)
     evt.preventDefault();
     // get the users selection
     var qstr = $('#ddlist :selected').text().split("~");
-
+    var qtype = $("input[name='qtype']:checked").val();
+    var dname = $("#dname").val();
+    
     $( "#results" ).empty();
     // build the query
-    if (qstr == "All")
+    if (dname.length > 0 && (qtype == 'drug' || qtype == 'device'))
+    {
+        URL = 'https://api.fda.gov/' + qtype + '/enforcement.json?search=product_description:'+ dname + '&limit=1';
+        api_call(URL, dname);
+    }
+    else if (qstr == "All")
     {
         var arr = new Array();
         $('#ddlist option').each(function(){
