@@ -9,15 +9,19 @@
         <table>
             <tr><td>First name </td><td><input type="text" name="fname" size="20" required></td></tr>
             <tr><td>Last name </td><td><input type="text" name="lname" size="20"required></td></tr>
-            <tr><td>Email </td><td><input type="text" name="email" size="50" required></td></tr>
-            <tr><td>Password </td><td><input type="password" name="password"  placeholder="Password" size="20" required>
-                Re-enter password<input type="password" name="confirm_password"  placeholder="Confirm Password" size="20" required></td></tr>
-            <tr><td>Telephone number </td><td><input type="text" name="tel_num" placeholder="999-999-9999" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" size="12"></td></tr>
+            <tr><td>Email </td><td><input type="text" name="email" size="50" 
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required></td></tr>
+            <tr><td>Password </td><td><input type="password" name="password"  placeholder="Password" size="20" 
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" 
+                required></td></tr>
+            <tr><td>Telephone number </td><td><input type="text" name="tel_num" placeholder="999-999-9999" 
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" size="12" title="999-999-9999"></td></tr>
             <tr><td>Caregiver email </td><td><input type="text" name="caregiver_email" size="50"></td></tr>
         </table>
         </div>
         <br><br><br>
         <p><button name="submit" type="submit" value="Register">Register</button></p>
         </form>
-    <script src="/static/js/registration.js"></script>
+
 {% endblock %}

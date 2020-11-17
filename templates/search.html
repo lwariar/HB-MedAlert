@@ -29,7 +29,14 @@
         <option value="{{item.id}}">Drug~{{ item.drug_name }}~{{ item.manufacturer }}</option>
         {% endfor %}
     </select>
-        <button name="submit" id="search" type="submit" value="Search">Search</button>
+    <br>OR Enter the name of the drug/device you want to search for :
+    <table class="mytable">
+        <tr><td><input type="radio" id="device" name="qtype" value="device"> Device</td>
+        <td><input type="radio" id="drug" name="qtype" value="drug"> Drug</td>
+        <td>Name <input type="text" name="name" size="20"></td>
+        <td>Manufacturer Name <input type="text" name="mname" size="20"></td></tr>
+    </table>
+    <button name="submit" id="search" type="submit" value="Search">Search</button>
     </div>
     <div id="results">
 

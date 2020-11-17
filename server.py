@@ -8,7 +8,6 @@ from jinja2 import StrictUndefined
 import crud
 from model import connect_to_db
 
-
 #API_KEY = os.environ['OPENFDA_API_KEY']
 
 app = Flask(__name__)
@@ -62,14 +61,9 @@ def register_user():
     lname = request.form.get('lname')
     email = request.form.get('email')
     password = request.form.get('password')
-    confirm_password = request.form.get('confirm_password')
     tel_num = request.form.get('tel_num')
     caregiver_email = request.form.get('caregiver_email')
     
-    if (password != confirm_password):
-        flash("Passowrds do not match, please try again.")
-        return redirect('/')
-        
     user = crud.get_user_by_email(email)
     
     """Check to see if user is already in database"""
@@ -83,7 +77,7 @@ def register_user():
         session["user_id"] = user.user_id
         flash("Your account was created successfully")
         
-        return render_template("login.html")
+        return redirect('/addupdate')
 
 @app.route('/addupdate')
 def add_update():
@@ -189,6 +183,7 @@ def update_profile():
         flash("Update successful")
     else:
         flash("Oops! Something went wrong!")
+        return redirect('/login')
     
     device = crud.get_devices_by_user_id(user.user_id)
     drug = crud.get_drugs_by_user_id(user.user_id)

@@ -4,6 +4,7 @@
 {% block body %}
     <form action="/update_dd" method="POST">
     <br><br>
+    {% if device or drug %}
     <div class="myclass">
     A list of current medications and/or devices:
     <table class="mytable">
@@ -21,6 +22,7 @@
     </table>
     </div>
     <br><br>
+    {% endif %}
     <div class="myclass">
     Add:
     <table class="mytable">
