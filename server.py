@@ -9,6 +9,7 @@ import crud
 from model import connect_to_db
 
 #API_KEY = os.environ['OPENFDA_API_KEY']
+NEWSAPIKEY = os.environ['NEWS_API_KEY']
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -16,8 +17,9 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def index():
-    """View login"""
-    return render_template("login.html")
+    """View homepage"""
+
+    return render_template("homepage.html")
 
 @app.route('/signin')
 def signin():

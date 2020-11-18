@@ -3,18 +3,13 @@
 
 {% block body %}
 
-    <div class="myClass">
-    <br>Search for regulatory warnings issued for pharmaceuticals and/or medical devices.
-    <br><input type="radio" id="device" name="qtype" value="device">
-        <label for="device">Device</label>
-        <input type="radio" id="drug" name="qtype" value="drug">
-        <label for="drug">Drug</label>
-        <input type="text" name="search_term" id="search_term" size="50" required>
-        <button name="submit" id="search" type="submit" value="Search">Search</button>
-    </div>
-    <div id="results" class="myClass">
+<div id="results" class="myClass"></div>
 
-    </div>
-    Would you like to email these results?<a href="">Click here</a>
-    <script src="/static/js/api_query_display.js"></script>
+<!-- Load React. -->
+<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+
+<script src="/static/js/home.js"></script>
 {% endblock %}
+
+
