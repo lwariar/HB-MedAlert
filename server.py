@@ -2,7 +2,8 @@
 
 import requests
 import os
-from flask import Flask, render_template, request, session, flash, redirect
+import json
+from flask import Flask, render_template, request, session, flash, redirect, jsonify
 from jinja2 import StrictUndefined
 
 import crud
@@ -18,7 +19,23 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def index():
     """View homepage"""
-    return render_template("homepage.html")
+    # get the news from newsapi
+    """
+    url = "http://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=" + NEWSAPIKEY
+    response = requests.get(url)
+    response_json = response.json()
+    articles = response_json['articles']
+    jsonify(articles)
+    """
+
+    #data for charts from json files
+    with open('data/drug_recall_total.json') as f:
+        drug_recall_data = json.load(f)
+
+    with open('data/device_recall_total.json') as f:
+        device_recall_data = json.load(f)
+
+    return render_template("homepage.html", drug_recall_data=drug_recall_data, device_recall_data=device_recall_data)
 
 @app.route('/signin')
 def signin():

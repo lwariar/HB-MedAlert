@@ -1,12 +1,15 @@
 'use strict';
 
+//get the apikey from config.js
+import 'config.js';
+
 var druglist = [];
 var devlist = [];
 
 function displayHomepage()
 {
     //get the latest medical news in the US through the newsapi
-    var url = "http://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=209a021c63b640db9763409e0fd96f38";
+    var url = "http://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=" + apikey;
 
     $.get(url, function( data ) {
         //display only the first 3 news items

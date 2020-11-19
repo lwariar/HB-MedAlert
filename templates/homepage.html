@@ -3,13 +3,86 @@
 
 {% block body %}
 
-<div id="results" class="myClass"></div>
-<div id="drugs"></div>
-<div id="devs" hidden></div>
-<canvas id="drug-chart"></canvas>
-<canvas id="dev-chart"></canvas>
+<div class="row">
+  <div class="col-4 text-center">news1</div>
+  <div class="col-4 text-center">news2</div>
+  <div class="col-4 text-center">news3</div>
+</div>
+<div class="row">
+  <div class="col-6 text-center"><canvas id="drug-chart"></canvas></div>
+  <div class="col-6 text-center"><canvas id="dev-chart"></canvas></div>
+</div>
+<script>
+    const drugChart = new Chart(
+      $('#drug-chart'),
+      {
+        type: 'bar',
+        options: {
+          title: {
+            display: true,
+            text: 'Drug Recall Enforcement Totals for the last 10 years'
+          },
+          legend: {
+            display: false,
+            labels: {
+                fontColor: 'rgb(255, 99, 132)'
+            }
+        }
+        },
+        data: {
+          labels: [
+          {% for item in drug_recall_data %}
+            '{{ item.year }}',
+          {% endfor %}
+          ],
+          datasets: [
+            {data: [
+              {% for item in drug_recall_data %}
+                '{{ item.total }}',  
+              {% endfor %}
+            ]}
+          ]
+        }
+      }
+    );
 
-<script src="/static/js/home.js"></script>
+    
+  </script>
+
+  <script>
+    const devChart = new Chart(
+      $('#dev-chart'),
+      {
+        type: 'bar',
+        options: {
+        title: {
+            display: true,
+            text: 'Device Recall Enforcement Totals for the last 10 years'
+        },
+        legend: {
+            display: false,
+            labels: {
+                fontColor: 'rgb(255, 99, 132)'
+            }
+        }
+        },
+        data: {
+          labels: [
+          {% for item in device_recall_data %}
+            '{{ item.year }}',
+          {% endfor %}
+          ],
+          datasets: [
+            {data: [
+              {% for item in device_recall_data %}
+                '{{ item.total }}',  
+              {% endfor %}
+            ]}
+          ]
+        }
+      }
+    );
+  </script>
 {% endblock %}
 
 
