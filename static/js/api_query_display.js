@@ -30,6 +30,7 @@ function api_call(URL, proddesc)
     .fail(function() {
         $('#results').append(`<br><b><i> ${proddesc} </i></b>`);
         $('#results').append(`<br><b><i>No results found at this time.</i></b>`);
+        $('#results').append(`<br>------------------------------------------------------------------`);
       });
 }
 function apiQueryResults(evt) 
@@ -75,7 +76,7 @@ function sendEmail(evt)
     //get the text from #results on the page
     //note: the body is limited to 2000 chars
     var d = new Date(); // add the current date to the email body
-    var email_body = d + "\n" + $("#results").text();
+    var email_body = d + "\n" + $("#results").innerHTML();
     email_body = encodeURIComponent(email_body);
     
     let user_email = $("#useremail").text();
