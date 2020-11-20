@@ -43,8 +43,8 @@ th {
 }
 
 img {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 5px;
-    width: 150px;
+    display: inline-block;
+    border-radius: 8px;
+    width: 350px;
+    height: 250px;
 }

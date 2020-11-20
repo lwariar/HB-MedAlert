@@ -5,6 +5,7 @@ import os
 import json
 from flask import Flask, render_template, request, session, flash, redirect, jsonify
 from jinja2 import StrictUndefined
+import smtplib 
 
 import crud
 from model import connect_to_db
@@ -20,13 +21,16 @@ app.jinja_env.undefined = StrictUndefined
 def index():
     """View homepage"""
     # get the news from newsapi
-    """
+    
     url = "http://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=" + NEWSAPIKEY
     response = requests.get(url)
     response_json = response.json()
     articles = response_json['articles']
     jsonify(articles)
-    """
+    # get the first three articles
+    news_articles = []
+    for i in range(0,3):
+        news_articles.append(articles[i])
 
     #data for charts from json files
     with open('data/drug_recall_total.json') as f:
@@ -35,12 +39,20 @@ def index():
     with open('data/device_recall_total.json') as f:
         device_recall_data = json.load(f)
 
-    return render_template("homepage.html", drug_recall_data=drug_recall_data, device_recall_data=device_recall_data)
+    return render_template("homepage.html", news_articles=news_articles, 
+            drug_recall_data=drug_recall_data, device_recall_data=device_recall_data)
 
 @app.route('/signin')
 def signin():
     """View login page"""
     return render_template("login.html")
+
+@app.route('/signout')
+def signout():
+    """logout"""
+    #remove the user id from session
+    session["user_id"] = ""
+    return redirect('/')
 
 @app.route('/login', methods=['POST'])
 def user_login():
@@ -65,6 +77,25 @@ def user_login():
 def about():
     """View about"""
     return render_template("about.html")
+
+@app.route('/contactus', methods=['POST'])
+def contactus():
+    """Send an email"""
+    name = request.form.get('name')
+    email = request.form.get('email')
+    subject = request.form.get('subject')
+    message = request.form.get('message')
+
+    host = "server.smtp.com"
+    server = smtplib.SMTP(host)
+    FROM = email
+    TO = "lakshmiwariar@hotmail.com"
+    MSG = message
+    server.sendmail(FROM, TO, MSG)
+
+    server.quit()
+    print("Email sent")
+    return redirect('/')
 
 @app.route('/add-user')
 def add_user():

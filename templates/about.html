@@ -4,8 +4,21 @@
 {% block body %}
     <br><br><br>
     <div class="myClass">
-        This page is under construction
-        <a href="mailto:lakshmiwariar@hotmail.com">Contact</a>
+    <h2>Contact Us</h2>
+    <p>Find an issue? Have a question? Have a suggestion? 
+        Send us a message and we’ll be sure to get back to you as fast as possible. </p>
+    <form action="/contactus"  method="POST">
+        <p>Your Name (required)</p>
+        <p><input type="text" name="name" required></p>
+        <p>Your Email (required)</p>
+        <p><input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required></p>
+        <p>Subject (required)</p>
+        <p><input type="text" name="subject" required></p>
+        <p>Your Message (required)</p>
+        <p><textarea name="message" rows="4" cols="50" required></textarea></p>
+        <p><button name="submit" type="submit" value="Send">Send</button></p>
+    </form>
+    <p>Thanks for stopping by the contact page! Feel free to reach out or ask any questions.</p>
     </div>
 
 {% endblock %}
