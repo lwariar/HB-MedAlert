@@ -9,9 +9,9 @@
         Send us a message and we’ll be sure to get back to you as fast as possible. </p>
     <form action="/contactus"  method="POST">
         <p>Your Name (required)</p>
-        <p><input type="text" name="name" required></p>
+        <p><input type="text" name="name" value="{{ user.fname }} {{ user.lname }}" required></p>
         <p>Your Email (required)</p>
-        <p><input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required></p>
+        <p><input type="text" name="email" value="{{ user.email }}" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required></p>
         <p>Subject (required)</p>
         <p><input type="text" name="subject" required></p>
         <p>Your Message (required)</p>

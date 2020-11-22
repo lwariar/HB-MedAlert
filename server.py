@@ -6,6 +6,9 @@ import json
 from flask import Flask, render_template, request, session, flash, redirect, jsonify
 from jinja2 import StrictUndefined
 import smtplib 
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 
 import crud
 from model import connect_to_db
@@ -47,11 +50,22 @@ def signin():
     """View login page"""
     return render_template("login.html")
 
+@app.route('/test1')
+def test1():
+    """View login page"""
+    return render_template("login.html")
+
+@app.route('/test2')
+def test2():
+    """View login page"""
+    return render_template("login.html")    
+
 @app.route('/signout')
 def signout():
     """logout"""
     #remove the user id from session
     session["user_id"] = ""
+    flash("Logged out successfully.")
     return redirect('/')
 
 @app.route('/login', methods=['POST'])
@@ -76,25 +90,48 @@ def user_login():
 @app.route('/about')
 def about():
     """View about"""
-    return render_template("about.html")
+
+    user_id = session.get("user_id")
+
+    if user_id:
+        user = crud.get_user_by_id(user_id)
+        return render_template("about.html", user=user)
+    else:
+        flash("Please sign in")
+        return render_template("login.html")
 
 @app.route('/contactus', methods=['POST'])
 def contactus():
     """Send an email"""
+    
     name = request.form.get('name')
     email = request.form.get('email')
     subject = request.form.get('subject')
     message = request.form.get('message')
 
-    host = "server.smtp.com"
-    server = smtplib.SMTP(host)
-    FROM = email
-    TO = "lakshmiwariar@hotmail.com"
-    MSG = message
-    server.sendmail(FROM, TO, MSG)
+    MY_ADDRESS = 'medalert_lw@outlook.com'
+    PASSWORD = 'Sample1234'
 
-    server.quit()
-    print("Email sent")
+    server = smtplib.SMTP(host='smtp-mail.outlook.com', port=587)
+    server.starttls()
+    server.login(MY_ADDRESS, PASSWORD)
+
+    msg = MIMEMultipart()       # create a message
+
+    # setup the parameters of the message
+    msg['From']='medalert_lw@outlook.com'
+    msg['To']=email
+    msg['Subject']="From MedAlert - " + subject
+
+    # add in the message body
+    message = "Thank you for your email. We will get back to you as soon as possible.\n\n" + message
+    msg.attach(MIMEText(message, 'plain'))
+
+    # send the message via the server set up earlier.
+    server.send_message(msg)
+    
+    del msg
+    flash("Thank you for your input.")
     return redirect('/')
 
 @app.route('/add-user')

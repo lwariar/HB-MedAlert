@@ -76,7 +76,7 @@ function sendEmail(evt)
     //get the text from #results on the page
     //note: the body is limited to 2000 chars
     var d = new Date(); // add the current date to the email body
-    var email_body = d + "\n" + $("#results").innerHTML();
+    var email_body = d + "\n" + $("#results").text();
     email_body = encodeURIComponent(email_body);
     
     let user_email = $("#useremail").text();
