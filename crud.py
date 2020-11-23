@@ -48,6 +48,11 @@ def check_user_login_info(email, password):
 
     return User.query.filter((User.email == email) & (User.password == password)).first()
 
+def get_password(email):
+    """get the pwd for the email and decode it to check login info"""
+
+    return User.query.filter(User.email == email).first()    
+
 def add_device(name, model_num, serial_num, mname, user_id):
     """add a new device for a user."""
 

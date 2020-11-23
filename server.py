@@ -8,10 +8,11 @@ from jinja2 import StrictUndefined
 import smtplib 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
+from cryptography.fernet import Fernet
 
 import crud
 from model import connect_to_db
+import pwd_encrypt
 
 #API_KEY = os.environ['OPENFDA_API_KEY']
 NEWSAPIKEY = os.environ['NEWS_API_KEY']
@@ -75,9 +76,12 @@ def user_login():
     email = request.form.get('email')
     password = request.form.get('password')
 
-    user = crud.check_user_login_info(email, password)
-
-    if user:
+    user = crud.get_password(email)
+    #encrypt the password
+    decoded_pwd = pwd_encrypt.decrypt_message(user.password)
+    
+    if decoded_pwd == password:
+        #if user:
         #add user id to the session
         session["user_id"] = user.user_id
         device = crud.get_devices_by_user_id(user.user_id)
@@ -149,7 +153,7 @@ def register_user():
     password = request.form.get('password')
     tel_num = request.form.get('tel_num')
     caregiver_email = request.form.get('caregiver_email')
-    
+
     user = crud.get_user_by_email(email)
     
     """Check to see if user is already in database"""
@@ -157,7 +161,11 @@ def register_user():
         flash("This email already exists. Please try again")
         return redirect('/')
     else:
-        user = crud.create_user(email, password, fname, lname, tel_num, caregiver_email)
+        #encrypt the password
+        encoded_pwd = pwd_encrypt.encrypt_message(password)
+    
+        # create user and add to table
+        user = crud.create_user(email, encoded_pwd, fname, lname, tel_num, caregiver_email)
 
         #add user id to the session
         session["user_id"] = user.user_id
@@ -205,7 +213,6 @@ def update_dd():
                     drug = crud.update_drug(key[3:], druname, "", "", drumname, user_id)
                 elif value == "delete":
                     crud.delete_drug(key[3:])
-            print(key,":", value)
     # get user info by user_id
     user = crud.get_user_by_id(user_id)
     #add drug/device for the user
@@ -216,7 +223,6 @@ def update_dd():
     if qtype == "device":
         device = crud.add_device(name, "", "", mname, user.user_id)
     elif qtype == "drug":
-        print(qtype, name, mname)
         drug = crud.add_drug(name, mname, user.user_id)
     
     #get a list of devices and drugs for the user
@@ -247,7 +253,8 @@ def profile():
 
     if user_id:
         user = crud.get_user_by_id(user_id)
-        return render_template("profile.html", user=user)
+        pwd = pwd_encrypt.decrypt_message(user.password)
+        return render_template("profile.html", user=user, pwd=pwd)
     else:
         flash("Please sign in")
         return render_template("login.html")
@@ -264,7 +271,8 @@ def update_profile():
     caregiver_email = request.form.get('caregiver_email')
 
     user_id = session.get("user_id")
-    user = crud.update_user(user_id, fname, lname, email, password, tel_num, caregiver_email)
+    encoded_pwd = pwd_encrypt.encrypt_message(password)
+    user = crud.update_user(user_id, fname, lname, email, encoded_pwd, tel_num, caregiver_email)
     if user:
         flash("Update successful")
     else:

@@ -11,7 +11,7 @@
             <tr><td>Last name </td><td><input type="text" name="lname" value="{{ user.lname }}" size="20"required></td></tr>
             <tr><td>Email </td><td><input type="text" name="email" value="{{ user.email }}" size="50" 
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required></td></tr>
-            <tr><td>Password </td><td><input type="password" name="password" value="{{ user.password }}" size="20" 
+            <tr><td>Password </td><td><input type="password" name="password" value="{{ pwd }}" size="20" 
                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                 title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" 
                 required></td></tr>
