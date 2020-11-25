@@ -6,7 +6,7 @@ function api_call(URL, proddesc)
 
         $('#results').append(`<br><b><i> ${proddesc} </i></b>`);
             $('#results').append(`<br>Product Description: ${data.results[0]['product_description']}`);
-            $('#results').append(`<br>Reason for recall:<i><b> ${data.results[0]['reason_for_recall']} </b></i>`);
+            $('#results').append(`<br>Reason for recall:<i><b><span style="background-color: #ff8e3c"> ${data.results[0]['reason_for_recall']} </span></b></i>`);
             $('#results').append(`<br>Classification: ${data.results[0]['classification']}`);
         
             //display dates in the mm/dd/yyyy format
@@ -73,15 +73,19 @@ function sendEmail(evt)
 {
     evt.preventDefault();
 
-    //get the text from #results on the page
-    //note: the body is limited to 2000 chars
-    var d = new Date(); // add the current date to the email body
-    var email_body = d + "\n" + $("#results").text();
-    email_body = encodeURIComponent(email_body);
     
     let user_email = $("#useremail").text();
     let subject = "From MedAlert!";
-    let mailurl = "mailto:" + user_email + ",?subject=" + subject + "&body="  + email_body;
+
+    //get the text from #results on the page
+    //note: the body is limited to 2000 chars
+    var d = new Date(); // add the current date to the email body
+    var email_body = d + "\n";    
+    var body = $("#results").html();
+    body = body.replace(/<br>/g, "\n");
+    email_body = email_body + body;
+
+    let mailurl = "mailto:" + user_email + ",?subject=" + encodeURIComponent(subject) + "&body="  + encodeURIComponent(email_body);;
     window.open(mailurl);
 }
 $("#emailthis").on("click", sendEmail);

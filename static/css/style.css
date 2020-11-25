@@ -1,38 +1,38 @@
-body {
-    text-align: center;
-    background-color: rgb(233, 213, 205);
-    min-height: 100vh;
+* {
+    margin: 0;
+    padding: 0;
 }
 
-footer {
-    position: relative;
-    bottom: 0;
+html, body {
+    height: 100%;
     text-align: center;
-    padding: 3px;
-    background-color: DarkSalmon;
-    color: white;
-    width: 100%;
-  }
+    font-family: 'Roboto', sans-serif;
+    background-color: #eff0f3;
+    color: #0d0d0d;
+}
 
-div {
-    text-align: left;
-    padding: 20px;
+#container{
+    min-height: 100%;
+    position: relative;
+}
+
+#main{
+    padding-bottom: 40px;
+}
+
+#footer {
+    position: absolute;
+    height: 40px;
+    width: 100%;
 }
 
 .myClass {
+    padding: 20px;
     border-style: solid;
     border-radius: 25px;
-    border-color: lightsalmon;
+    border-color: #d9376e;
     border-width: 1px;
 }
-
-button {
-    background-color: DarkSalmon;
-    border-radius: 8px;
-    padding: 4px;
-    color: white;
-    text-align: center;
-  }
 
 .mytable {
     width: 100%;
@@ -44,7 +44,26 @@ th {
 
 img {
     display: inline-block;
+    border:solid;
+    border-width: 4px;
+    border-color: #d9376e;
     border-radius: 8px;
     width: 350px;
     height: 250px;
+}
+
+p {
+    color: #2a2a2a;
+}
+
+button {
+    background-color: #ff8e3c;        
+    border: none;
+    color: #0d0d0d;
+    padding: 15px 32px;
+}
+
+input[type=text], input[type=password] {
+    border: none;
+    border-bottom: 2px solid #d9376e;
 }

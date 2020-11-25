@@ -24,17 +24,26 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def index():
     """View homepage"""
-    # get the news from newsapi
     
-    url = "http://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=" + NEWSAPIKEY
-    response = requests.get(url)
-    response_json = response.json()
-    articles = response_json['articles']
-    jsonify(articles)
-    # get the first three articles
+    if "user_id" not in session:
+        session["user_id"] = ""
+        
     news_articles = []
-    for i in range(0,3):
-        news_articles.append(articles[i])
+    # get the news from newsapi
+    try:
+        url = "http://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=" + NEWSAPIKEY
+        response = requests.get(url)
+        response_json = response.json()
+        articles = response_json['articles']
+        jsonify(articles)
+        
+        # get the first three articles
+        
+        for i in range(0,3):
+            news_articles.append(articles[i])
+    
+    except requests.exceptions.RequestException as e: 
+        print("NewsAPI not responding!!!")
 
     #data for charts from json files
     with open('data/drug_recall_total.json') as f:
@@ -210,7 +219,7 @@ def update_dd():
                 if value == "update":
                     druname = request.form.get('druname')
                     drumname = request.form.get('drumname')
-                    drug = crud.update_drug(key[3:], druname, "", "", drumname, user_id)
+                    drug = crud.update_drug(key[3:], druname, drumname, user_id)
                 elif value == "delete":
                     crud.delete_drug(key[3:])
     # get user info by user_id

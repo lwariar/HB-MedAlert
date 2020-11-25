@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-{% block title %}MedAlert - Home{% endblock %}
+{% block title %}MedAlert - Homepage{% endblock %}
 
 {% block body %}
-  Welcome!!! MedAlert! is a secure web based app that allows a user to search for regulatory warnings issued for pharmaceuticals 
-  and/or medical devices. The app will use the openFDA API (Food and Drug Administration) as the data source on FDA actions. 
+  <h3>Welcome!!! MedAlert! is a secure web based app that allows a user to search for regulatory warnings issued for pharmaceuticals 
+  and/or medical devices. The app will use the openFDA API (Food and Drug Administration) as the data source on FDA actions. </h3>
 <div class="row">
   {% for item in news_articles %}
   <div class="col-4 text-center">
@@ -87,6 +87,7 @@
       }
     );
   </script>
+  <a href="/search">Click here</a> to search for regulatory warnings or recalls issued for the drugs or medical devices you are using
 {% endblock %}
 
 
