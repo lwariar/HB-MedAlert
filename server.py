@@ -85,6 +85,7 @@ def user_login():
         session["user_id"] = user.user_id
         device = crud.get_devices_by_user_id(user.user_id)
         drug = crud.get_drugs_by_user_id(user.user_id)
+        flash("Login successful.")
         return render_template("search.html", user=user, device=device, drug=drug)
     else:
         flash("Login info incorrect, please try again")
@@ -155,7 +156,7 @@ def register_user():
 
     user = crud.get_user_by_email(email)
     
-    """Check to see if user is already in database"""
+    #Check to see if user is already in database
     if user:
         flash("This email already exists. Please try again")
         return redirect('/')
@@ -227,7 +228,7 @@ def update_dd():
     #get a list of devices and drugs for the user
     device = crud.get_devices_by_user_id(user.user_id)
     drug = crud.get_drugs_by_user_id(user.user_id)
-
+    flash("Update successful.")
     return render_template("search.html", user=user, device=device, drug=drug)
 
 @app.route('/search')
