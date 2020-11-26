@@ -58,17 +58,7 @@ def index():
 @app.route('/signin')
 def signin():
     """View login page"""
-    return render_template("login.html")
-
-@app.route('/test1')
-def test1():
-    """View login page"""
-    return render_template("login.html")
-
-@app.route('/test2')
-def test2():
-    """View login page"""
-    return render_template("login.html")    
+    return render_template("login.html") 
 
 @app.route('/signout')
 def signout():

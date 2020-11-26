@@ -2,24 +2,9 @@
 {% block title %}MedAlert - Home{% endblock %}
 
 {% block body %}
-    <marquee behavior="scroll" direction="left">
-    November 06, 2020 
-    <a href="https://www.fda.gov/news-events/press-announcements/fda-permits-marketing-new-device-designed-reduce-sleep-disturbance-related-nightmares-certain-adults">
-    FDA Permits Marketing of New Device Designed to Reduce Sleep Disturbance Related to Nightmares in Certain Adults. </a>
-    November 06, 2020
-    <a href="https://www.fda.gov/news-events/press-announcements/coronavirus-covid-19-update-fda-authorizes-first-test-detects-neutralizing-antibodies-recent-or">
-    Coronavirus (COVID-19) Update: FDA Authorizes First Test that Detects Neutralizing Antibodies from Recent or Prior SARS-CoV-2 Infection</a>
-    November 03, 2020
-    <a href="https://www.fda.gov/news-events/press-announcements/coronavirus-covid-19-update-november-3-2020">
-    Coronavirus (COVID-19) Update: November 3, 2020</a>
-    </marquee>
-
-    <div class="myClass">
+<form>
     <p id="useremail" hidden>"{{user.email}}"</p>
-    <br>Hi {{ user.fname }} !
-    <br>Search for regulatory warnings issued for pharmaceuticals and/or medical devices.
-    <br>Choose from the list or enter new drug/device:
-
+    <br>Search for regulatory warnings issued for pharmaceuticals and/or medical devices. Choose from the list:
     <select name="ddlist" id="ddlist">
         <option value="all">All</option>
         {% for item in device %}
@@ -30,17 +15,21 @@
         {% endfor %}
     </select>
     <br>OR Enter the name of the drug/device you want to search for :
-    <table class="mytable">
-        <tr><td>Device <input type="radio" id="device" name="qtype" value="device"></td>
-        <td> Drug <input type="radio" id="drug" name="qtype" value="drug"></td>
-        <td>Name <input type="text" id="dname"></td></tr>
+    <table>
+        <tr><td><input type="radio" id="device" name="qtype" value="device"> Device</td>
+        <td><input type="radio" id="drug" name="qtype" value="drug"> Drug </td>
+        <td><input type="text" id="dname" placeholder="Name"></td></tr>
     </table>
+    <br><br>
     <button name="submit" id="search" type="submit" value="Search">SEARCH</button>
-    </div>
-    <div id="results">
+</form>
+<div class="row">
+    <div class="col-2"></div>
+    <div id="results" class="col-8 text-left"></div>
+    <div class="col-2"></div>
+</div>
+<p id="emaillink" hidden>Would you like to email these results? <a href="#" id="emailthis">Click Here</a></p>
 
-    </div>
-    Would you like to email these results? <button name="emailthis" id="emailthis" value="emailthis" disabled>Click Here</button>
-    <script src="/static/js/api_query_display.js"></script>
+<script src="/static/js/api_query_display.js"></script>
     
 {% endblock %}

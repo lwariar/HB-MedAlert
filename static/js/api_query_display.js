@@ -24,13 +24,16 @@ function api_call(URL, proddesc)
             $('#results').append(`<br>Voluntary Mandated: ${data.results[0]['voluntary_mandated']}`);
             $('#results').append(`<br>Status: ${data.results[0]['status']}`);
             $('#results').append(`<br>------------------------------------------------------------------`);
-            //enable the email button
-            $('#emailthis').prop('disabled', false);
+            //show the email link
+            $("#emaillink").attr("hidden", false);   
+            
     })
     .fail(function() {
         $('#results').append(`<br><b><i> ${proddesc} </i></b>`);
         $('#results').append(`<br><b><i>No results found at this time.</i></b>`);
         $('#results').append(`<br>------------------------------------------------------------------`);
+        //hide the email link
+        $("#emaillink").attr("hidden", true); 
       });
 }
 function apiQueryResults(evt) 
@@ -41,7 +44,8 @@ function apiQueryResults(evt)
     var qtype = $("input[name='qtype']:checked").val();
     var dname = $("#dname").val();
     
-    $( "#results" ).empty();
+    $("#results").empty();
+
     // build the query
     if (dname.length > 0 && (qtype == 'drug' || qtype == 'device'))
     {
@@ -73,7 +77,6 @@ function sendEmail(evt)
 {
     evt.preventDefault();
 
-    
     let user_email = $("#useremail").text();
     let subject = "From MedAlert!";
 

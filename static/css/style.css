@@ -1,8 +1,7 @@
-* {
-    margin: 0;
-    padding: 0;
+*{
+    margin:0;
+    padding:0;
 }
-
 html, body {
     height: 100%;
     text-align: center;
@@ -11,45 +10,14 @@ html, body {
     color: #0d0d0d;
 }
 
-#container{
-    min-height: 100%;
-    position: relative;
-}
-
-#main{
-    padding-bottom: 40px;
-}
-
-#footer {
+footer {
     position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: #f25f4c;
+    color:  #eff0f3;
     height: 40px;
     width: 100%;
-}
-
-.myClass {
-    padding: 20px;
-    border-style: solid;
-    border-radius: 25px;
-    border-color: #d9376e;
-    border-width: 1px;
-}
-
-.mytable {
-    width: 100%;
-}
-
-th {
-    padding: 10px;
-}
-
-img {
-    display: inline-block;
-    border:solid;
-    border-width: 4px;
-    border-color: #d9376e;
-    border-radius: 8px;
-    width: 350px;
-    height: 250px;
 }
 
 p {
@@ -57,13 +25,48 @@ p {
 }
 
 button {
-    background-color: #ff8e3c;        
+    background-color: #ff8906;        
     border: none;
-    color: #0d0d0d;
-    padding: 15px 32px;
+    border-radius: 8px;
+    padding: 15px;
+    color: #fffffe;
+    cursor: pointer;
+    width:100%;
 }
 
 input[type=text], input[type=password] {
+    padding: 15px;
+    width: 100%;
     border: none;
-    border-bottom: 2px solid #d9376e;
+    border-bottom: 1px solid #ff8906;
+}
+
+h1 {
+    color: #fffffe;
+}
+
+a:link, a:visited {
+    color:#0d0d0d;;
+  }
+
+form {
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 700px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  }
+
+.divtext {
+    font-size: 30px;
+}
+
+table {
+    width:100%;
+}
+textarea {
+    width:100%;
 }

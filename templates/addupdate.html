@@ -3,35 +3,30 @@
 
 {% block body %}
     <form action="/update_dd" method="POST">
-    <br><br>
     {% if device or drug %}
-    <div class="myclass">
-    A list of current medications and/or devices:
-    <table class="mytable">
-        <tr><th>Update</th><th>Delete</th><th>Device/Drug Name and Manufacturer</th></tr>
+    <h3>Your drugs or medical devices</h3>
+    <br>
+    <table>
         {% for item in device %}
-        <tr><td><input type="radio" id="update" name="dev{{ item.id }}" value="update"></td>
-            <td><input type="radio" id="delete" name="dev{{ item.id }}" value="delete"></td>
-            <td><input type="text" name="devname" value="{{ item.device_name }}" size="20"> <input type="text" name="devmname" value="{{ item.manufacturer }}" size="20"></td></tr>
+        <tr><td><input type="radio" id="update" name="dev{{ item.id }}" value="update"> Update </td>
+            <td><input type="radio" id="delete" name="dev{{ item.id }}" value="delete"> Delete </td>
+            <td><input type="text" name="devname" value="{{ item.device_name }}"></td><td><input type="text" name="devmname" value="{{ item.manufacturer }}" placeholder="Manufacturer Name"></td></tr>
         {% endfor %}
         {% for item in drug %}
-        <tr><td><input type="radio" id="update" name="dru{{ item.id }}" value="update"></td>
-            <td><input type="radio" id="delete" name="dru{{ item.id }}" value="delete"></td>
-            <td><input type="text" name="druname" value="{{ item.drug_name }}" size="20"> <input type="text" name="drumname" value="{{ item.manufacturer }}" size="20"></td></tr>
+        <tr><td><input type="radio" id="update" name="dru{{ item.id }}" value="update"> Update </td>
+            <td><input type="radio" id="delete" name="dru{{ item.id }}" value="delete"> Delete </td>
+            <td><input type="text" name="druname" value="{{ item.drug_name }}"></td><td><input type="text" name="drumname" value="{{ item.manufacturer }}" placeholder="Manufacturer Name"></td></tr>
         {% endfor %}
     </table>
-    </div>
     <br><br>
     {% endif %}
-    <div class="myclass">
     Add:
-    <table class="mytable">
-        <tr><td><input type="radio" id="device" name="qtype" value="device"> Device</td>
-        <td><input type="radio" id="drug" name="qtype" value="drug"> Drug</td>
-        <td>Name <input type="text" name="name" size="20"></td>
-        <td>Manufacturer Name <input type="text" name="mname" size="20"></td></tr>
+    <table>
+        <tr><td><input type="radio" id="device" name="qtype" value="device"> Device </td>
+        <td><input type="radio" id="drug" name="qtype" value="drug"> Drug </td>
+        <td><input type="text" name="name" placeholder="Name"></td>
+        <td><input type="text" name="mname" placeholder="Manufacturer Name"></td></tr>
     </table>
-    </div>
     <br><br><br>
     <p><button name="submit" type="submit" value="Update">UPDATE</button></p>
     </form>

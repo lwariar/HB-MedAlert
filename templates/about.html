@@ -2,23 +2,18 @@
 {% block title %}MedAlert - Login{% endblock %}
 
 {% block body %}
-    <br><br><br>
-    <div class="myClass">
+<form action="/contactus"  method="POST">
     <h2>Contact Us</h2>
-    <p>Find an issue? Have a question? Have a suggestion? 
-        Send us a message and we’ll be sure to get back to you as fast as possible. </p>
-    <form action="/contactus"  method="POST">
-        <p>Your Name (required)</p>
-        <p><input type="text" name="name" value="{{ user.fname }} {{ user.lname }}" required></p>
-        <p>Your Email (required)</p>
-        <p><input type="text" name="email" value="{{ user.email }}" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required></p>
-        <p>Subject (required)</p>
-        <p><input type="text" name="subject" required></p>
-        <p>Your Message (required)</p>
-        <p><textarea name="message" rows="4" cols="50" required></textarea></p>
-        <p><button name="submit" type="submit" value="Send">SEND</button></p>
-    </form>
-    <p>Thanks for stopping by the contact page! Feel free to reach out or ask any questions.</p>
-    </div>
+    <br>Find an issue? Have a question? Have a suggestion? 
+        Send us a message and we’ll be sure to get back to you as fast as possible.
+    <br><input type="text" name="name" value="{{ user.fname }} {{ user.lname }}" placeholder="Your name" required>
+    <br><input type="text" name="email" value="{{ user.email }}" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Email" required>
+    <br><input type="text" name="subject" placeholder="Subject" required></p>
+    <br><textarea name="message" rows="4" cols="50" placeholder="Message" required></textarea>
+    <br><br>
+    <button name="submit" type="submit" value="Send">SEND</button>
+    <br><br>
+    Thanks for stopping by the contact page! Feel free to reach out or ask any questions.
+</form>
 
 {% endblock %}

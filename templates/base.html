@@ -17,9 +17,15 @@
 </head>
 
 <body>
+<div class="row" style="background-color: #0f0e17;">
+  <div class="col-4 text-left divtext" style="color: #fffffe;"><a href="/"><img src="/static/img/caduceus-pink-hi.png" width="50" height="50"></a> 
+    MEDALERT</div>
+  <div class="col-4 text-center" style="color: #fffffe;"><br>Monitor your drug and device safety</div>
+  <div class="col-4 text-right" style="color: #fffffe;"><br><i>Powered by openFDA</i></div>
+</div>
+
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">MedAlert!</a>
+<nav class="navbar navbar-expand-lg" style="background-color: #f25f4c">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -43,16 +49,15 @@
       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="dropdown-item" href="/profile"><i class="fas fa-user"></i> Edit Profile</a>
         <a class="dropdown-item" href="/addupdate"><i class="fas fa-pills"></i> Drugs/Devices</a>
-        <a class="dropdown-item" href="/about"><i class="fas fa-at"></i> Contact Us</a>
       </div>
       </li> 
       <li class="nav-item">
-        <a class="nav-link disabled" href="#"></a>
+        <a class="nav-link" href="/about"><i class="fas fa-at"></i> About Us</a>
       </li>
     </ul>
   </div>
 </nav>
-
+<div><br><br></div>
 <div>
   <!-- Show flashed messages -->
   {% with messages = get_flashed_messages() %}
@@ -67,7 +72,7 @@
   {% endblock %}
 </div>
 <!-- footer -->
-<footer id="footer">Disclaimer:
+<footer>Disclaimer:
     Do not rely on openFDA to make decisions 
     regarding medical care. Always speak to your health provider 
     about the risks and benefits of FDA-regulated products. </footer>
