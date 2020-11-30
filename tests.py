@@ -1,7 +1,8 @@
 import unittest
 import os
-from server import app, session
-import model
+from flask import Flask, render_template, request, session, flash, redirect, jsonify
+from server import app
+from model import connect_to_db, db, User, Drug, Device, example_data
 import crud
 import pwd_encrypt
 
@@ -13,14 +14,21 @@ class FlaskTests(unittest.TestCase):
         self.client = app.test_client()
         app.config['TESTING'] = True
 
+        connect_to_db(app, 'postgresql:///testdb')
+        # Create tables
+        db.create_all()
+
+
     def tearDown(self):
         # executed after each test
-        pass
+        db.session.close()
+        db.drop_all()
+
     
     def test_homepage(self):
         # test homepage 
         result = self.client.get('/')
-        self.assertIn(b"MEDALERT", result.data)
+        self.assertIn(b"Click here", result.data)
     
     def test_login(self):
         # test login page
@@ -30,7 +38,21 @@ class FlaskTests(unittest.TestCase):
         # test logout
         return self.client.get("/signout", follow_redirects=True)
 
+    def test_add_user(self):
+        # test add user page
+        result = self.client.get('/add-user')
+        self.assertIn(b"Create an account", result.data)
+        
+    def test_about(self):
+        # test about page
+        result = self.client.get('/about')
+        self.assertIn(b"Click here", result.data)
 
+    def test_contact_us(self):
+        # test contact us page
+        return self.client.post("/contactus", data={"name": "Lucky One", "email": "lucky@yahoo.com", "subject": "Hello", "message": "How to do something?"}, follow_redirects=True)
+
+"""
 # tests for the database
 class RDBTests(unittest.TestCase):
     #test if the model classes populate the tables correctly
@@ -45,6 +67,7 @@ class RDBTests(unittest.TestCase):
     def tearDown(self):
         # to do after each test
         db.session.close()
-        
+"""
+
 if __name__ == "__main__":
     unittest.main()

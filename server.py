@@ -14,7 +14,6 @@ import crud
 from model import connect_to_db
 import pwd_encrypt
 
-#API_KEY = os.environ['OPENFDA_API_KEY']
 NEWSAPIKEY = os.environ['NEWS_API_KEY']
 
 app = Flask(__name__)
@@ -65,7 +64,6 @@ def signout():
     """logout"""
     #remove the user id from session
     session["user_id"] = ""
-    flash("Logged out successfully.")
     return redirect('/')
 
 @app.route('/login', methods=['POST'])
@@ -85,7 +83,6 @@ def user_login():
         session["user_id"] = user.user_id
         device = crud.get_devices_by_user_id(user.user_id)
         drug = crud.get_drugs_by_user_id(user.user_id)
-        flash("Login successful.")
         return render_template("search.html", user=user, device=device, drug=drug)
     else:
         flash("Login info incorrect, please try again")
@@ -135,7 +132,6 @@ def contactus():
     server.send_message(msg)
     
     del msg
-    flash("Thank you for your input.")
     return redirect('/')
 
 @app.route('/add-user')
@@ -169,8 +165,6 @@ def register_user():
 
         #add user id to the session
         session["user_id"] = user.user_id
-        flash("Your account was created successfully")
-        
         return redirect('/addupdate')
 
 @app.route('/addupdate')
@@ -228,7 +222,7 @@ def update_dd():
     #get a list of devices and drugs for the user
     device = crud.get_devices_by_user_id(user.user_id)
     drug = crud.get_drugs_by_user_id(user.user_id)
-    flash("Update successful.")
+
     return render_template("search.html", user=user, device=device, drug=drug)
 
 @app.route('/search')
@@ -274,14 +268,12 @@ def update_profile():
     encoded_pwd = pwd_encrypt.encrypt_message(password)
     user = crud.update_user(user_id, fname, lname, email, encoded_pwd, tel_num, caregiver_email)
     if user:
-        flash("Update successful")
+        device = crud.get_devices_by_user_id(user.user_id)
+        drug = crud.get_drugs_by_user_id(user.user_id)
+        return render_template("search.html", user=user, device=device, drug=drug)
     else:
         flash("Oops! Something went wrong!")
         return redirect('/login')
-    
-    device = crud.get_devices_by_user_id(user.user_id)
-    drug = crud.get_drugs_by_user_id(user.user_id)
-    return render_template("search.html", user=user, device=device, drug=drug)
 
 if __name__ == '__main__':
     connect_to_db(app)

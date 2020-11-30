@@ -3,6 +3,14 @@
 
 {% block body %}
 <div class="row">
+  <div class="col-4 text-center"><canvas id="drug-chart"></canvas></div>
+  <div class="col-4 text-center"><img src="/static/img/diabetes_0.jpg"></div>
+  <div class="col-4 text-center"><canvas id="dev-chart"></canvas></div>
+</div>
+<br>
+<b><a href="/search">Click here</a> to search for regulatory warnings or recalls issued for the drugs or medical devices you are using</b>
+<br><br>
+<div class="row">
   {% for item in news_articles %}
   <div class="col-4 text-center">
     <figure>
@@ -12,11 +20,6 @@
   </div>
   {% endfor %}
 </div>
-<div class="row">
-  <div class="col-4 text-center"><canvas id="drug-chart"></canvas></div>
-  <div class="col-4 text-center"></div>
-  <div class="col-4 text-center"><canvas id="dev-chart"></canvas></div>
-</div>
 <script>
     const drugChart = new Chart(
       $('#drug-chart'),
@@ -25,7 +28,7 @@
         options: {
           title: {
             display: true,
-            text: 'Drug Recall Enforcement Totals for the last 10 years'
+            text: 'Drug Recall Enforcement Totals'
           },
           legend: {
             display: false,
@@ -46,7 +49,7 @@
                 '{{ item.total }}',  
               {% endfor %}
             ],
-            backgroundColor: ['#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000']
+            backgroundColor: ['#696969','#696969','#696969','#696969','#696969','#696969','#696969','#696969','#696969','#696969']
             }
           ]
         }
@@ -62,12 +65,12 @@
         options: {
         title: {
             display: true,
-            text: 'Device Recall Enforcement Totals for the last 10 years'
+            text: 'Device Recall Enforcement Totals'
         },
         legend: {
             display: false,
             labels: {
-                fontColor: 'rgb(255, 99, 132)'
+                fontColor: '#000000'
             }
         }
         },
@@ -83,14 +86,14 @@
                 '{{ item.total }}',  
               {% endfor %}
             ],
-            backgroundColor: ['#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000','#000000']
+            backgroundColor: ['#696969','#696969','#696969','#696969','#696969','#696969','#696969','#696969','#696969','#696969']
             }
           ]
         }
       }
     );
   </script>
-  <a href="/search">Click here</a> to search for regulatory warnings or recalls issued for the drugs or medical devices you are using
+
 {% endblock %}
 
 

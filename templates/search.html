@@ -2,19 +2,27 @@
 {% block title %}MedAlert - Home{% endblock %}
 
 {% block body %}
+<div class="row">
+    <div class="col-6"></div>
+    <div class="col-5"><h3>Search Results:</h3></div>
+    <div class="col-1"></div>
+</div>
+<div class="row">
+<div class="col-6">
 <form>
     <p id="useremail" hidden>"{{user.email}}"</p>
-    <br>Search for regulatory warnings issued for pharmaceuticals and/or medical devices. Choose from the list:
+    <br><h2>Search</h2>
+    Recalls for your medications and medical devices
     <select name="ddlist" id="ddlist">
         <option value="all">All</option>
         {% for item in device %}
-        <option value="{{item.id}}">Device~{{ item.device_name }}~{{ item.manufacturer }}</option>
+        <option value="{{item.id}}">Device-{{ item.device_name }}-{{ item.manufacturer }}</option>
         {% endfor %}
         {% for item in drug %}
-        <option value="{{item.id}}">Drug~{{ item.drug_name }}~{{ item.manufacturer }}</option>
+        <option value="{{item.id}}">Drug-{{ item.drug_name }}-{{ item.manufacturer }}</option>
         {% endfor %}
     </select>
-    <br>OR Enter the name of the drug/device you want to search for :
+    <br><br><br>OR Enter the name of the drug/device you want to search for :
     <table>
         <tr><td><input type="radio" id="device" name="qtype" value="device"> Device</td>
         <td><input type="radio" id="drug" name="qtype" value="drug"> Drug </td>
@@ -23,13 +31,12 @@
     <br><br>
     <button name="submit" id="search" type="submit" value="Search">SEARCH</button>
 </form>
-<div class="row">
-    <div class="col-2"></div>
-    <div id="results" class="col-8 text-left"></div>
-    <div class="col-2"></div>
 </div>
-<p id="emaillink" hidden>Would you like to email these results? <a href="#" id="emailthis">Click Here</a></p>
-
+<div class="col-5 text-left divresults" id="results"></div>
+<div class="col-1"></div>
+</div>
+<p id="emaillink" hidden><b>Would you like to email the results? <a href="#" id="emailthis">Click Here</a></b></p>
 <script src="/static/js/api_query_display.js"></script>
+
     
 {% endblock %}

@@ -55,6 +55,37 @@ class Device(db.Model):
     def __repr__(self):
         return f'<Device device_name={self.device_name} manufacturer={self.manufacturer}>'
 
+def example_data():
+    """Create some sample data."""
+
+    # In case this is run more than once, empty out existing data
+    User.query.delete()
+    Drug.query.delete()
+    Device.query.delete()
+
+    # Add user
+    user = User("testing@test.com", "1111", "Test", "User", "612-222-3333", "testing2@test.com")
+
+    db.session.add(user)
+
+    # add records to the drugs table
+    d1 = Drug("Lohxa", "Lohxa, LLC", 1)
+    d2 = Drug("Metformin", "Nostrum Laboratories", 1)
+
+    # add records to the devices table
+    d3 = Device("TRUE METRIX", "", "", "Trividia Health, Inc.", 1)
+
+    db.session.add_all([d1, d2, d3])
+    db.session.commit()
+
+    leonard = Employee(name='Leonard', dept=dl)
+    liz = Employee(name='Liz', dept=dl)
+    maggie = Employee(name='Maggie', dept=dm)
+    nadine = Employee(name='Nadine')
+
+    db.session.add_all([df, dl, dm, leonard, liz, maggie, nadine])
+    db.session.commit()
+
 def connect_to_db(flask_app, db_uri='postgresql:///medalert', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo

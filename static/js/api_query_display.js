@@ -40,7 +40,7 @@ function apiQueryResults(evt)
 {
     evt.preventDefault();
     // get the users selection
-    var qstr = $('#ddlist :selected').text().split("~");
+    var qstr = $('#ddlist :selected').text().split("-");
     var qtype = $("input[name='qtype']:checked").val();
     var dname = $("#dname").val();
     
@@ -60,7 +60,7 @@ function apiQueryResults(evt)
         });
         for (let i=1; i<arr.length; i++)
         {
-            let tempstr = arr[i].split("~");
+            let tempstr = arr[i].split("-");
             URL = 'https://api.fda.gov/' + tempstr[0] + '/enforcement.json?search=product_description:'+ tempstr[1] + '&limit=1';
             api_call(URL, tempstr[1]);
         }

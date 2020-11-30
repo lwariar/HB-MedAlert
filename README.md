@@ -1,4 +1,5 @@
 MEDALERT
+
 MedAlert is a tool that allows a user to search for regulatory warnings or recalls issued for their pharmaceuticals and/or medical devices. Users can register and add a list of drugs and devices they would like to monitor. If the user finds recall notifications, they can get advice from their healthcare provider about the risks and benefits.
 
 Features for the first sprint include: 
@@ -10,6 +11,7 @@ Features for the first sprint include:
 
 Project Tech Stack:
 Python, Flask, SQLAlchemy, PostgreSQL, JavaScript (JQuery, AJAX), HTML, CSS, Bootstrap, Jinja, Chart.js
+
 APIs:
 openFDA, newsapi
 
