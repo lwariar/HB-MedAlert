@@ -23,7 +23,7 @@ function api_call(URL, proddesc)
             $('#results').append(`<br>Termination Date: ${t_date}`);
             $('#results').append(`<br>Voluntary Mandated: ${data.results[0]['voluntary_mandated']}`);
             $('#results').append(`<br>Status: ${data.results[0]['status']}`);
-            $('#results').append(`<br>------------------------------------------------------------------`);
+            $('#results').append(`<br><br>`);
             //show the email link
             $("#emaillink").attr("hidden", false);   
             
@@ -31,7 +31,6 @@ function api_call(URL, proddesc)
     .fail(function() {
         $('#results').append(`<br><b><i> ${proddesc} </i></b>`);
         $('#results').append(`<br><b><i>No results found at this time.</i></b>`);
-        $('#results').append(`<br>------------------------------------------------------------------`);
         //hide the email link
         $("#emaillink").attr("hidden", true); 
       });
@@ -80,12 +79,20 @@ function sendEmail(evt)
     let user_email = $("#useremail").text();
     let subject = "From MedAlert!";
 
-    //get the text from #results on the page
-    //note: the body is limited to 2000 chars
+    //get the text from #results on the page -- note: the body is limited to 2000 chars
     var d = new Date(); // add the current date to the email body
     var email_body = d + "\n";    
-    var body = $("#results").html();
+    var body = $("#results").html(); 
+
+    //remove all the html formating
     body = body.replace(/<br>/g, "\n");
+    body = body.replace(/<b>/g, "");
+    body = body.replace(/<\/b>/g, "");
+    body = body.replace(/<i>/g, "");
+    body = body.replace(/<\/i>/g, "");
+    body = body.replace(/<span style="background-color: #ff8e3c">/g, "");
+    body = body.replace(/<\/span>/g, "");
+
     email_body = email_body + body;
 
     let mailurl = "mailto:" + user_email + ",?subject=" + encodeURIComponent(subject) + "&body="  + encodeURIComponent(email_body);;

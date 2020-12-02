@@ -17,20 +17,20 @@ import pwd_encrypt
 NEWSAPIKEY = os.environ['NEWS_API_KEY']
 
 app = Flask(__name__)
-app.secret_key = "dev"
+app.secret_key = 'dev'
 app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
 def index():
     """View homepage"""
     
-    if "user_id" not in session:
-        session["user_id"] = ""
+    if 'user_id' not in session:
+        session['user_id'] = ''
         
     news_articles = []
     # get the news from newsapi
     try:
-        url = "http://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=" + NEWSAPIKEY
+        url = 'http://newsapi.org/v2/top-headlines?country=us&category=health&apiKey=' + NEWSAPIKEY
         response = requests.get(url)
         response_json = response.json()
         articles = response_json['articles']
@@ -42,7 +42,7 @@ def index():
             news_articles.append(articles[i])
     
     except requests.exceptions.RequestException as e: 
-        print("NewsAPI not responding!!!")
+        print('NewsAPI not responding!!!')
 
     #data for charts from json files
     with open('data/drug_recall_total.json') as f:
@@ -51,19 +51,19 @@ def index():
     with open('data/device_recall_total.json') as f:
         device_recall_data = json.load(f)
 
-    return render_template("homepage.html", news_articles=news_articles, 
+    return render_template('homepage.html', news_articles=news_articles, 
             drug_recall_data=drug_recall_data, device_recall_data=device_recall_data)
 
 @app.route('/signin')
 def signin():
     """View login page"""
-    return render_template("login.html") 
+    return render_template('login.html') 
 
 @app.route('/signout')
 def signout():
     """logout"""
     #remove the user id from session
-    session["user_id"] = ""
+    session['user_id'] = ''
     return redirect('/')
 
 @app.route('/login', methods=['POST'])
@@ -80,26 +80,26 @@ def user_login():
     if decoded_pwd == password:
         #if user:
         #add user id to the session
-        session["user_id"] = user.user_id
+        session['user_id'] = user.user_id
         device = crud.get_devices_by_user_id(user.user_id)
         drug = crud.get_drugs_by_user_id(user.user_id)
-        return render_template("search.html", user=user, device=device, drug=drug)
+        return render_template('search.html', user=user, device=device, drug=drug)
     else:
-        flash("Login info incorrect, please try again")
+        flash('Login info incorrect, please try again')
         return redirect('/signin')
 
 @app.route('/about')
 def about():
     """View about"""
 
-    user_id = session.get("user_id")
+    user_id = session.get('user_id')
 
     if user_id:
         user = crud.get_user_by_id(user_id)
-        return render_template("about.html", user=user)
+        return render_template('about.html', user=user)
     else:
-        flash("Please sign in")
-        return render_template("login.html")
+        flash('Please sign in')
+        return render_template('login.html')
 
 @app.route('/contactus', methods=['POST'])
 def contactus():
@@ -125,7 +125,7 @@ def contactus():
     msg['Subject']="From MedAlert - " + subject
 
     # add in the message body
-    message = "Thank you for your email. We will get back to you as soon as possible.\n\n" + message
+    message = 'Thank you for your email. We will get back to you as soon as possible.\n\n' + message
     msg.attach(MIMEText(message, 'plain'))
 
     # send the message via the server set up earlier.
@@ -137,7 +137,7 @@ def contactus():
 @app.route('/add-user')
 def add_user():
     """View add user page"""
-    return render_template("register.html")
+    return render_template('register.html')
 
 @app.route('/register', methods=['POST'])
 def register_user():
@@ -154,7 +154,7 @@ def register_user():
     
     #Check to see if user is already in database
     if user:
-        flash("This email already exists. Please try again")
+        flash('This email already exists. Please try again')
         return redirect('/')
     else:
         #encrypt the password
@@ -164,48 +164,48 @@ def register_user():
         user = crud.create_user(email, encoded_pwd, fname, lname, tel_num, caregiver_email)
 
         #add user id to the session
-        session["user_id"] = user.user_id
+        session['user_id'] = user.user_id
         return redirect('/addupdate')
 
 @app.route('/addupdate')
 def add_update():
     """View add-update """
 
-    user_id = session.get("user_id")
+    user_id = session.get('user_id')
 
     if user_id:
         user = crud.get_user_by_id(user_id)
         device = crud.get_devices_by_user_id(user.user_id)
         drug = crud.get_drugs_by_user_id(user.user_id)
-        return render_template("addupdate.html", user=user, device=device, drug=drug)
+        return render_template('addupdate.html', user=user, device=device, drug=drug)
     else:
-        flash("Please sign in")
-        return render_template("login.html")
+        flash('Please sign in')
+        return render_template('login.html')
 
 @app.route('/update_dd', methods=['POST'])
 def update_dd():
-    """ update the device nd drug tables"""
+    """ update the device and drug tables"""
 
-    user_id = session.get("user_id")
+    user_id = session.get('user_id')
     #update or delete drugs/devices
     # get the selected options from the form
     f = request.form
     for key in f.keys():
         for value in f.getlist(key):
-            if key[0:3] == "dev":
-                if value == "update":
+            if key[0:3] == 'dev':
+                if value == 'update':
                     devname = request.form.get('devname')
                     devmname = request.form.get('devmname')
-                    device = crud.update_device(key[3:], devname, "", "", devmname, user_id)
-                elif value == "delete":
+                    device = crud.update_device(key[3:], devname, '', '', devmname, user_id)
+                elif value == 'delete':
                     crud.delete_device(key[3:])
 
-            elif key[0:3] == "dru":
-                if value == "update":
+            elif key[0:3] == 'dru':
+                if value == 'update':
                     druname = request.form.get('druname')
                     drumname = request.form.get('drumname')
                     drug = crud.update_drug(key[3:], druname, drumname, user_id)
-                elif value == "delete":
+                elif value == 'delete':
                     crud.delete_drug(key[3:])
     # get user info by user_id
     user = crud.get_user_by_id(user_id)
@@ -214,44 +214,45 @@ def update_dd():
     name = request.form.get('name')
     mname = request.form.get('mname')
 
-    if qtype == "device":
-        device = crud.add_device(name, "", "", mname, user.user_id)
-    elif qtype == "drug":
+    if qtype == 'device':
+        device = crud.add_device(name, '', '', mname, user.user_id)
+    elif qtype == 'drug':
         drug = crud.add_drug(name, mname, user.user_id)
     
     #get a list of devices and drugs for the user
     device = crud.get_devices_by_user_id(user.user_id)
     drug = crud.get_drugs_by_user_id(user.user_id)
 
-    return render_template("search.html", user=user, device=device, drug=drug)
+    return render_template('search.html', user=user, device=device, drug=drug)
 
 @app.route('/search')
 def search():
     """View search"""
     
     # get the list of drugs and devices for this user
-    user_id = session.get("user_id")
+    user_id = session.get('user_id')
     if user_id:
         user = crud.get_user_by_id(user_id)
         device = crud.get_devices_by_user_id(user.user_id)
         drug = crud.get_drugs_by_user_id(user.user_id)
-        return render_template("search.html", user=user, device=device, drug=drug)
+        return render_template('search.html', user=user, device=device, drug=drug)
     else:
-        flash("Please sign in")
-        return render_template("login.html")
+        flash('Please sign in')
+        return render_template('login.html')
 
 @app.route('/profile')
 def profile():
     """View edit profile"""
-    user_id = session.get("user_id")
+
+    user_id = session.get('user_id')
 
     if user_id:
         user = crud.get_user_by_id(user_id)
         pwd = pwd_encrypt.decrypt_message(user.password)
-        return render_template("profile.html", user=user, pwd=pwd)
+        return render_template('profile.html', user=user, pwd=pwd)
     else:
-        flash("Please sign in")
-        return render_template("login.html")
+        flash('Please sign in')
+        return render_template('login.html')
 
 @app.route('/update-profile', methods=['POST'])
 def update_profile():
@@ -264,15 +265,15 @@ def update_profile():
     tel_num = request.form.get('tel_num')
     caregiver_email = request.form.get('caregiver_email')
 
-    user_id = session.get("user_id")
+    user_id = session.get('user_id')
     encoded_pwd = pwd_encrypt.encrypt_message(password)
     user = crud.update_user(user_id, fname, lname, email, encoded_pwd, tel_num, caregiver_email)
     if user:
         device = crud.get_devices_by_user_id(user.user_id)
         drug = crud.get_drugs_by_user_id(user.user_id)
-        return render_template("search.html", user=user, device=device, drug=drug)
+        return render_template('search.html', user=user, device=device, drug=drug)
     else:
-        flash("Oops! Something went wrong!")
+        flash('Oops! Something went wrong!')
         return redirect('/login')
 
 if __name__ == '__main__':
