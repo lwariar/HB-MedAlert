@@ -1,4 +1,4 @@
-![alt text](/static/img/MedAlert_icon_2.png "Logo Title Text 1")
+![alt text](https://github.com/lwariar/HB-MedAlert/blob/main/static/img/MedAlert_icon_2.PNG "MedAlert")
 
 
 MED*alert* is a tool that allows a user to search for regulatory warnings or recalls issued for their pharmaceuticals and/or medical devices. Users can register and add a list of drugs and devices they would like to monitor. If the user finds recall notifications, they can get advice from their healthcare provider about the risks and benefits. The app uses the openFDA API (Food and Drug Administration) as the data source on FDA actions.
