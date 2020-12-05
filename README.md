@@ -10,13 +10,13 @@ Features for the first sprint include:
 4. Search for and display the results using the openFDA API 
 5. E-mail the results to the user
 
-###Project Tech Stack:
+### Project Tech Stack:
     Python, Flask, SQLAlchemy, PostgreSQL, JavaScript, JQuery, AJAX, HTML, CSS, Bootstrap, Jinja, Chart.js
 
-###APIs:
+### APIs:
     openFDA, newsapi
 
-###Installation:
+### Installation:
 Clone this repository
 Create and activate a virtual environment
 
@@ -44,6 +44,6 @@ Start the backend server:
 
 Open a new window/tab on your browser to localhost:5000
 
-###Future Implementation:
+### Future Implementation:
     The app will automatically notify the user via email or text message of any recalls
     Autocomplete for names of drugs and devices
