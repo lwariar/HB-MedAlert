@@ -32,18 +32,18 @@ function api_call(URL, proddesc)
         $('#results').append(`<br><b><i> ${proddesc} </i></b>`);
         $('#results').append(`<br><b><i>No results found at this time.</i></b>`);
         //hide the email link
-        $("#emaillink").attr("hidden", true); 
+        $('#emaillink').attr('hidden', true); 
       });
 }
 function apiQueryResults(evt) 
 {
     evt.preventDefault();
     // get the users selection
-    var qstr = $('#ddlist :selected').text().split("-");
-    var qtype = $("input[name='qtype']:checked").val();
-    var dname = $("#dname").val();
+    var qstr = $('#ddlist :selected').text().split('-');
+    var qtype = $('input[name="qtype"]:checked').val();
+    var dname = $('#dname').val();
     
-    $("#results").empty();
+    $('#results').empty();
 
     // build the query
     if (dname.length > 0 && (qtype == 'drug' || qtype == 'device'))
@@ -51,7 +51,7 @@ function apiQueryResults(evt)
         URL = 'https://api.fda.gov/' + qtype + '/enforcement.json?search=product_description:'+ dname + '&limit=1';
         api_call(URL, dname);
     }
-    else if (qstr == "All")
+    else if (qstr == 'All')
     {
         var arr = new Array();
         $('#ddlist option').each(function(){
@@ -59,7 +59,7 @@ function apiQueryResults(evt)
         });
         for (let i=1; i<arr.length; i++)
         {
-            let tempstr = arr[i].split("-");
+            let tempstr = arr[i].split('-');
             URL = 'https://api.fda.gov/' + tempstr[0] + '/enforcement.json?search=product_description:'+ tempstr[1] + '&limit=1';
             api_call(URL, tempstr[1]);
         }
@@ -76,26 +76,26 @@ function sendEmail(evt)
 {
     evt.preventDefault();
 
-    let user_email = $("#useremail").text();
-    let subject = "From MedAlert!";
+    let user_email = $('#useremail').text();
+    let subject = 'From MedAlert!';
 
     //get the text from #results on the page -- note: the body is limited to 2000 chars
     var d = new Date(); // add the current date to the email body
-    var email_body = d + "\n";    
-    var body = $("#results").html(); 
+    var email_body = d + '\n';    
+    var body = $('#results').html(); 
 
     //remove all the html formating
-    body = body.replace(/<br>/g, "\n");
-    body = body.replace(/<b>/g, "");
-    body = body.replace(/<\/b>/g, "");
-    body = body.replace(/<i>/g, "");
-    body = body.replace(/<\/i>/g, "");
-    body = body.replace(/<span style="background-color: #ff8e3c">/g, "");
-    body = body.replace(/<\/span>/g, "");
+    body = body.replace(/<br>/g, '\n');
+    body = body.replace(/<b>/g, '');
+    body = body.replace(/<\/b>/g, '');
+    body = body.replace(/<i>/g, '');
+    body = body.replace(/<\/i>/g, '');
+    body = body.replace(/<span style="background-color: #ff8e3c">/g, '');
+    body = body.replace(/<\/span>/g, '');
 
     email_body = email_body + body;
 
-    let mailurl = "mailto:" + user_email + ",?subject=" + encodeURIComponent(subject) + "&body="  + encodeURIComponent(email_body);;
+    let mailurl = 'mailto:' + user_email + ',?subject=' + encodeURIComponent(subject) + '&body='  + encodeURIComponent(email_body);
     window.open(mailurl);
 }
-$("#emailthis").on("click", sendEmail);
+$('#emailthis').on('click', sendEmail);
