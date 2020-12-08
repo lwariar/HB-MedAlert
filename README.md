@@ -45,6 +45,7 @@ Start the backend server:
 Open a new window/tab on your browser to localhost:5000
 
 ### Future Implementation:
-Send an SMS using Twilio
-Autocomplete for names of drugs and devices  
+Send an SMS using Twilio  
+Add an autocomplete feature for names of drugs and devices  
+Add filters to the search function  
 The app will automatically notify the user via email or text message of any recalls  
