@@ -28,7 +28,7 @@ Install dependencies
 
     (env) $ pip3 install -r requirements.txt
 
-Create a secrets.sh file and save your API secret key
+Create a secret.key and secrets.sh file to store your API keys
 Activate the secrets.sh file
 
     (env) $ source secrets.sh
@@ -36,7 +36,7 @@ Activate the secrets.sh file
 Create the database
 
     (env) $ createdb medalert
-    (env) $ python3 model.py
+    (env) $ python3 seed_database.py
 
 Start the backend server:
 
@@ -45,5 +45,6 @@ Start the backend server:
 Open a new window/tab on your browser to localhost:5000
 
 ### Future Implementation:
-    The app will automatically notify the user via email or text message of any recalls
-    Autocomplete for names of drugs and devices
+Send an SMS using Twilio
+Autocomplete for names of drugs and devices  
+The app will automatically notify the user via email or text message of any recalls  

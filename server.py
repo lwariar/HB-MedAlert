@@ -13,8 +13,13 @@ from cryptography.fernet import Fernet
 import crud
 from model import connect_to_db
 import pwd_encrypt
+from twilio.rest import Client
 
 NEWSAPIKEY = os.environ['NEWS_API_KEY']
+#Twilio cccount info
+account_sid = os.environ['TWILIO_ACCOUNT_SID']
+auth_token = os.environ['TWILIO_AUTH_TOKEN']
+twilio_number = os.environ['TWILIO_TEST_NUMBER']
 
 app = Flask(__name__)
 app.secret_key = 'dev'
@@ -275,6 +280,19 @@ def update_profile():
     else:
         flash('Oops! Something went wrong!')
         return redirect('/login')
+
+@app.route('/smsthis')
+def sms_results():
+    """SMS the results to the user via Twilio"""
+
+    sms_body = 'Hello'
+
+    print("in sms this")
+
+    client = Client(account_sid, auth_token)
+    message = client.messages.create(body=sms_body, from_=twilio_number, to='+17632189128')
+    print(message.sid)
+    return redirect('/')
 
 if __name__ == '__main__':
     connect_to_db(app)
